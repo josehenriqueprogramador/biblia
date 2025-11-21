@@ -1,0 +1,128 @@
+# 📘 Projeto Bíblia — Documentação e Estrutura
+
+Este documento explica de forma clara e organizada toda a estrutura do projeto **Bíblia**, detalhando o propósito de cada pasta e arquivo importante dentro de `src/`.
+
+
+# 📂 Estrutura Geral do Projeto
+
+```
+src/
+├── App.vue
+├── assets/
+├── biblia/
+├── main.js
+├── style.css
+```
+
+A seguir, cada item é explicado individualmente.
+
+
+# 📌 App.vue
+
+Arquivo raiz da aplicação Vue. É responsável por renderizar o conteúdo de acordo com a rota selecionada.
+
+```vue
+<router-view />
+```
+
+* Serve como "esqueleto" da aplicação.
+* O roteador insere automaticamente a view correspondente à rota atual.
+
+
+# 📁 assets/
+
+Pasta destinada a arquivos estáticos, como imagens, ícones, fontes ou qualquer recurso que precise ser importado pelo projeto.
+
+Exemplos:
+
+* Logos
+* SVGs
+* Imagens usadas em componentes
+
+
+# 📁 biblia/
+
+É o **módulo principal** da aplicação, contendo tudo relacionado à funcionalidade de leitura e navegação bíblica.
+
+Dentro dela existem subpastas importantes:
+
+## 📂 components/
+
+Componentes reutilizáveis específicos da área "Bíblia".
+
+Exemplos:
+
+* Listagem de livros
+* Seleção de versões
+* Teste de múltiplas versões
+
+## 📂 router/
+
+Define as rotas do módulo bíblico.
+
+Contém:
+
+* `index.js` — configuração do Vue Router, definindo quais views aparecem em cada URL.
+
+## 📂 services/
+
+Contém funções de acesso à API.
+
+Arquivo principal:
+
+* `api.js` — responsável por buscar versões, livros, capítulos e versículos.
+
+## 📂 stores/
+
+Gerenciamento de estado da aplicação (Vuex ou Pinia).
+
+Armazena dados como:
+
+* Versão selecionada
+* Lista de livros
+* Capítulos
+* Versículos
+
+## 📂 utils/
+
+Funções utilitárias usadas em várias partes do sistema.
+
+Exemplos:
+
+* Formatação de texto
+* Helpers para manipulação de dados
+
+## 📂 views/
+
+Views = páginas associadas às rotas.
+
+Incluem:
+
+* `BibliaView.vue`
+* `LivrosView.vue`
+* `CapitulosView.vue`
+* `VersiculosView.vue`
+
+Cada view representa uma página da aplicação.
+
+
+# 📄 main.js
+
+Arquivo inicial da aplicação. Ele:
+
+* Cria a instância do Vue.
+* Carrega o roteador.
+* Carrega o gerenciador de estado (se houver).
+* Monta a aplicação no DOM.
+
+
+# 🎨 style.css
+
+Arquivo com estilos globais da aplicação.
+
+Pode conter:
+
+* Estilos reset
+* Variáveis
+* Estilos aplicados em toda a aplicação
+
