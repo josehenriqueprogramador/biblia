@@ -1,18 +1,25 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getVersoes } from "../services/api";
+import { useRouter } from "vue-router";
 
-const versoes = ref([]);
+const router = useRouter();
+const versoes = ref(null);
 const loading = ref(true);
 
 onMounted(async () => {
   try {
-    versoes.value = await getVersoes();
+    const r = await getVersoes();
+    versoes.value = r;     // lista de versões
   } catch (e) {
-    console.error("Erro ao buscar versões:", e);
+    console.error("Erro carregando versões:", e);
   }
   loading.value = false;
 });
+
+function abrirVersao(v) {
+  router.push(`/versao/${v}`);
+}
 </script>
 
 <template>
@@ -22,12 +29,14 @@ onMounted(async () => {
     <div v-if="loading">Carregando...</div>
 
     <ul v-else>
-      <li v-for="v in versoes" :key="v">
-        <router-link :to="`/versao/${v}`">
-          {{ v }}
-        </router-link>
+      <li
+        v-for="v in versoes"
+        :key="v"
+        @click="abrirVersao(v)"
+        style="cursor:pointer; padding:10px; font-size:20px; border-bottom:1px solid #ccc"
+      >
+        {{ v.toUpperCase() }}
       </li>
     </ul>
   </div>
 </template>
-

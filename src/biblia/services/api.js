@@ -26,7 +26,15 @@ export async function getCapitulos(versao, livro) {
 // -------- Versículos
 export async function getVersiculos(versao, livro, capitulo) {
   const r = await api.get(`/api/versiculos/${versao}/${livro}/${capitulo}`);
-  return r.data.versiculos;
+  return r.data;  // <-- AQUI ESTÁ A CORREÇÃO
+}
+
+// -------- Versículo unico
+export async function getVersiculoUnico(versao, livro, cap, numero) {
+  const url = `https://biblia-desktop-fastapi.onrender.com/api/versiculo/${versao}/${livro}/${cap}/${numero}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error("Erro API versículo único");
+  return await r.json();
 }
 
 export default api;

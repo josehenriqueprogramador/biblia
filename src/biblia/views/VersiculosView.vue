@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { getVersiculos } from "../services/api";
+
+const router = useRouter();
 
 const props = defineProps({
   versao: String,
@@ -8,41 +11,37 @@ const props = defineProps({
   capitulo: String,
 });
 
-const versiculos = ref([]);
+const dados = ref(null);
 const loading = ref(true);
 
 onMounted(async () => {
-  try {
-    versiculos.value = await getVersiculos(
-      props.versao,
-      props.livro,
-      props.capitulo
-    );
-  } catch (e) {
-    console.error("Erro ao carregar versículos:", e);
-  }
+  dados.value = await getVersiculos(props.versao, props.livro, props.capitulo);
   loading.value = false;
 });
 </script>
 
 <template>
   <div>
-    <h2>{{ props.livro.toUpperCase() }} {{ props.capitulo }} — Versículos ({{ props.versao }})</h2>
-    
+    <h2>
+      {{ props.livro.toUpperCase() }} {{ props.capitulo }} — Versículos ({{ props.versao }})
+    </h2>
+
     <div v-if="loading">Carregando...</div>
 
-    <ol v-else>
-      <ol>
-         <li v-for="(texto, index) in versiculos" :key="index">
-             {{ texto }}
-          </li>
-       </ol>
-
-    </ol>
+    <ul v-else>
+      <li
+        v-for="(_, idx) in dados.versiculos"
+        :key="idx"
+        class="verso-item"
+        style="cursor: pointer; padding: 8px 0; font-size: 22px;"
+        @click="router.push(`/versao/${props.versao}/${props.livro}/${props.capitulo}/${idx + 1}`)"
+      >
+        {{ idx + 1 }}
+      </li>
+    </ul>
 
     <p>
       <router-link :to="`/versao/${props.versao}/${props.livro}`">Voltar</router-link>
     </p>
   </div>
 </template>
-
